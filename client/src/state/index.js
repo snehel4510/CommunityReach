@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   token: null,
   posts: [],
+  communities: [],
 };
 
 export const authSlice = createSlice({
@@ -24,7 +25,7 @@ export const authSlice = createSlice({
     },
     setComms: (state, action) => {
       if (state.user) {
-        state.user.communitites = action.payload.communities;
+        state.user.communities = action.payload.communities;
       } else {
         console.error("user has not joined any community");
       }

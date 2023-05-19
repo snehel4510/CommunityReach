@@ -5,6 +5,7 @@ import {
   getUserComms,
   getUserBooks,
   addRemoveComms,
+  checkMember,
 } from "../controllers/userc.js";
 
 const router = express.Router();
@@ -13,6 +14,7 @@ const router = express.Router();
 router.get("/:id", verifyToken, getUser);
 router.get("/:id/comms", verifyToken, getUserComms);
 router.get("/:id/books", verifyToken, getUserBooks);
+router.get("/:uid/:commId", verifyToken, checkMember);
 
 /* UPDATE */
 router.patch("/:uid/:commId", verifyToken, addRemoveComms);

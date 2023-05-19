@@ -5,12 +5,20 @@ import Comm from "../models/Comm.js";
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
-    const { userId, description, picturePath, commName } = req.body;
+    let { userId, description, picturePath, commName } = req.body;
+    console.log(userId, description, picturePath, commName)
+    if(!commName) {
+      // commName = "JUET coders";
+      //select one random community
+      const comms = await Comm.find();
+      const index = Math.floor(Math.random() * comms.length);
+      commName = comms[index].name;
+    }
     const user = await User.findById(userId);
     const comm = await Comm.findOne({ name: commName });
-    if (!comm) {
-      return res.status(404).json({ message: "Community not found" });
-    }
+    // if (!commName) {
+    //   // return res.status(404).json({ message: "Community not found" });
+    // }
     const cid = comm._id;
     if (!user.communities.includes(cid)) {
         user.communities.push(cid);
@@ -32,7 +40,8 @@ export const createPost = async (req, res) => {
     comm.posts.push(pid);
     await user.save();
     await comm.save();
-    const posts = await Post.find();
+    // fetch all posts in decreasing order of time
+    const posts = await Post.find({}).sort({ createdAt: -1 });
     res.status(201).json(posts);
   } catch (err) {
     res.status(409).json({ message: err.message });
@@ -42,7 +51,7 @@ export const createPost = async (req, res) => {
 /* READ */
 export const getFeedPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ createdAt: -1 });
     res.status(200).json(posts); 
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -52,7 +61,7 @@ export const getFeedPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId });
+    const posts = await Post.find({ userId }).sort({ createdAt: -1 });
     res.status(200).json(posts);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -62,7 +71,7 @@ export const getUserPosts = async (req, res) => {
 export const getCommPosts = async (req, res) => {
   try {
     const { commId } = req.params;
-    const posts = await Post.find({ commId });
+    const posts = await Post.find({ commId }).sort({ createdAt: -1 });
     res.status(200).json(posts);
   } catch (err) {
     res.status(404).json({ message: err.message });

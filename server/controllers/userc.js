@@ -60,7 +60,7 @@ export const addRemoveComms = async (req, res) => {
     const user = await User.findById(uid);
     const comm = await Comm.findById(commId);
     if (user.communities.includes(commId)) {  // remove
-      user.communities = user.friends.filter((id) => id !== commId);
+      user.communities = user.communities.filter((id) => id !== commId);
       comm.members = comm.members.filter((id) => id !== uid);
     } else {  //add
       user.communities.push(commId);
@@ -69,9 +69,11 @@ export const addRemoveComms = async (req, res) => {
     await user.save();
     await comm.save();
 
-    const comms = await Promise.all(
-      user.communities.map((id) => Comm.findById(id))
-    );
+    // const comms = await Promise.all(
+    //   user.communities.map((id) => Comm.findById(id))
+    // );
+    // return all communities instead of just user communities
+    const comms = await Comm.find();
     const formattedComms = comms.map(
       ({ _id, name, createdBy, coverPic, about }) => {
         return { _id, name, createdBy, coverPic, about };
@@ -79,6 +81,22 @@ export const addRemoveComms = async (req, res) => {
     );
 
     res.status(200).json(formattedComms);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+// to check if a user is a member of a community
+export const checkMember = async (req, res) => {
+  try {
+    const { uid, commId } = req.params;
+    const user = await User.findById(uid);
+    const comm = await Comm.findById(commId);
+    if (user.communities.includes(commId)) {  // remove
+      res.status(200).json(true);
+    } else {  //add
+      res.status(200).json(false);
+    }
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
