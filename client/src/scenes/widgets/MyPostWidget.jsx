@@ -2,9 +2,9 @@ import {
     EditOutlined,
     DeleteOutlined,
     AttachFileOutlined,
-    GifBoxOutlined,
+    // GifBoxOutlined,
     ImageOutlined,
-    MicOutlined,
+    // MicOutlined,
     MoreHorizOutlined,
 } from "@mui/icons-material";
 import {
@@ -82,7 +82,7 @@ const MyPostWidget = ({ picturePath }) => {
             <FlexBetween gap="1.5rem">
                 <UserImage image={picturePath} />
                 <InputBase
-                    placeholder="What's on your mind..."
+                    placeholder="Ask something..."
                     onChange={(e) => setDesc(e.target.value)}
                     value={desc}
                     sx={{
@@ -181,22 +181,27 @@ const MyPostWidget = ({ picturePath }) => {
                     </Typography>
                 </FlexBetween>
 
+                <FlexBetween gap="0.25rem">
+                    <AttachFileOutlined sx={{ color: mediumMain }} />
+                    <Typography color={mediumMain}>Attachment</Typography>
+                </FlexBetween>
+
                 {isNonMobileScreens ? (
                     <>
-                        <FlexBetween gap="0.25rem">
+                        {/* <FlexBetween gap="0.25rem">
                             <GifBoxOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Clip</Typography>
-                        </FlexBetween>
+                        </FlexBetween> */}
 
-                        <FlexBetween gap="0.25rem">
+                        {/* <FlexBetween gap="0.25rem">
                             <AttachFileOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Attachment</Typography>
-                        </FlexBetween>
+                        </FlexBetween> */}
 
-                        <FlexBetween gap="0.25rem">
+                        {/* <FlexBetween gap="0.25rem">
                             <MicOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Audio</Typography>
-                        </FlexBetween>
+                        </FlexBetween> */}
                     </>
                 ) : (
                     <FlexBetween gap="0.25rem">

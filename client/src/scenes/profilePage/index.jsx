@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
 import CommListWidget from "scenes/widgets/CommListWidget";
-import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import BookmarksWidget from "scenes/widgets/BookmarksWidget";
 
-const ProfilePage = () => {
+const ProfilePage = ({ books = false }) => {
     const [user, setUser] = useState(null);
     const { userId } = useParams();
     const token = useSelector((state) => state.token);
@@ -42,7 +42,12 @@ const ProfilePage = () => {
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
                     <UserWidget userId={userId} picturePath={user.picturePath} />
                     <Box m="2rem 0" />
-                    <CommListWidget userId={userId} />
+                    {/* create a button to view bookmarks  */}
+                    {/* <Button size="large" variant="contained" endIcon={<BookmarkBorderOutlinedIcon />}>
+                        Click to view Bookmarks
+                    </Button>
+                    <Box m="2rem 0" /> */}
+                    <CommListWidget userId={userId} user={true} />
                 </Box>
                 <Box
                     flexBasis={isNonMobileScreens ? "42%" : undefined}
@@ -50,7 +55,8 @@ const ProfilePage = () => {
                 >
                     {/* <MyPostWidget picturePath={user.picturePath} /> */}
                     {/* <Box m="2rem 0" />  */}
-                    <PostsWidget Id={userId} isProfile={true} />
+                    {books ? <BookmarksWidget userId={userId} /> : <PostsWidget Id={userId} isProfile={true} />}
+                    {/* <PostsWidget Id={userId} isProfile={true} /> */}
                 </Box>
             </Box>
         </Box>

@@ -31,6 +31,10 @@ function App() {
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
             />
             <Route
+              path="/profile/:userId/bookmarks"
+              element={isAuth ? <ProfilePage books={true}/> : <Navigate to="/" />}
+            />
+            <Route
               path="/community/:commId"
               element={isAuth ? <CommPage /> : <Navigate to="/" />}
             />

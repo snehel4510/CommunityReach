@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setComms } from "state";
 
-const CommListWidget = ({ userId }) => {
+const CommListWidget = ({ userId, user = false }) => {
     const dispatch = useDispatch();
     const { palette } = useTheme();
     const token = useSelector((state) => state.token);
@@ -24,8 +24,21 @@ const CommListWidget = ({ userId }) => {
         dispatch(setComms({ communities: data }));
     };
 
+    const getUserComms = async () => {
+        const response = await fetch(
+            `/users/${userId}/comms`,
+            {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
+        const data = await response.json();
+        dispatch(setComms({ communities: data }));
+    };
+
     useEffect(() => {
-        getComms();
+        if (user) getUserComms();
+        else getComms();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (

@@ -11,6 +11,8 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 
 const UserWidget = ({ userId }) => {
     const [user, setUser] = useState(null);
@@ -97,7 +99,11 @@ const UserWidget = ({ userId }) => {
             {/* THIRD ROW */}
             <Box p="1rem 0">
                 <FlexBetween mb="0.5rem">
-                    <Typography color={medium}> Bookmarks </Typography>
+
+                    <IconButton aria-label="delete" onClick={() => navigate(`/profile/${userId}/bookmarks`)}>
+                        <Typography color={medium}>Bookmarks </Typography> <BookmarkBorderOutlinedIcon />
+                    </IconButton>
+
                     <Typography color={main} fontWeight="500">
                         {bookmarks.length}
                     </Typography>
