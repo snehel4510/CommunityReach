@@ -49,7 +49,7 @@ const CommListWidget = ({ userId, user = false }) => {
                 fontWeight="500"
                 sx={{ mb: "1.5rem" }}
             >
-                Community List
+                Community List ({communities.length})
             </Typography>
             <Box display="flex" flexDirection="column" gap="1.5rem">
                 {communities.map(({ _id, name, coverPic }) => (

@@ -39,6 +39,7 @@ const PostsWidget = ({ Id, isProfile = false }) => {
 
     return (
         <>
+            {/* posts = {posts.length} */}
             {posts.map(
                 ({
                     _id,
